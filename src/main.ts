@@ -12,7 +12,7 @@ const untis = new WebUntis(school, username, password, server);
 const main = async () => {
   try {
     await untis.login();
-    console.log("[SUCESS] Logged in");
+    console.log("[SUCCESS] Logged in");
   } catch (error) {
     console.error(error);
   }
@@ -26,7 +26,7 @@ const main = async () => {
 
   try {
     await untis.logout();
-    console.log("[SUCESS] Logged out");
+    console.log("[SUCCESS] Logged out");
   } catch (error) {
     console.error(error);
   }
