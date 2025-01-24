@@ -1,0 +1,28 @@
+{
+  "name": "untis-app",
+  "version": "1.0.0",
+  "description": "Terminal based app to interact with the untis webapp",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/main.js",
+    "run": "tsc -p tsconfig.json && node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xTheFreeZe/untis-app.git"
+  },
+  "author": "Marwin, Sebastian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xTheFreeZe/untis-app/issues"
+  },
+  "homepage": "https://github.com/xTheFreeZe/untis-app#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "webuntis": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.10"
+  }
+}
