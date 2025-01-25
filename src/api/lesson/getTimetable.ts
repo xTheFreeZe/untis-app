@@ -1,18 +1,24 @@
-import { WebUntis, Lesson } from "webuntis";
+import { WebUntis } from "webuntis";
 import { getUserData } from "../../util/getUserData";
 
-interface TimetableData {
-  data: number;
+interface Lesson {
+  className: string;
   startTime: number;
   endTime: number;
-  activityType?: string;
-  code?: string;
-  info?: string;
-  subjectStringArrary: string[];
-  roomStringArray: string[];
+  room: string;
+  roomShort: string;
+  teacher: string;
+  teacherShort: string;
+  orignalTeacher?: string;
+  subject: string;
+  subjectShort: string;
 }
 
-export const getTimetableForToday = async (): Promise<TimetableData | null> => {
+interface TimetableData {
+  lessons: Lesson[];
+}
+
+export const getTimetableForToday = async (): Promise<TimetableData> => {
   const userData = getUserData();
 
   const untisInstance = new WebUntis(
@@ -28,7 +34,7 @@ export const getTimetableForToday = async (): Promise<TimetableData | null> => {
     console.error(`[ERROR] While trying to log in: \n${error}`);
   }
 
-  let data: TimetableData | null = null;
+  let data: TimetableData = { lessons: [] };
 
   try {
     const temp = await untisInstance.getOwnTimetableForToday();
@@ -36,17 +42,27 @@ export const getTimetableForToday = async (): Promise<TimetableData | null> => {
     // No lessons today
     if (temp.length == 0) {
       console.log("No lessons today");
-      await untisInstance.logout();
     } else {
-      console.log(temp);
-      console.log(temp[0].kl);
-      console.log(temp[0].te);
-      console.log(temp[0].su);
-      console.log(temp[0].ro);
+      temp.sort((a, b) => a.startTime - b.startTime);
+      for (let i = 0; i < temp.length; i++) {
+        const lesson = temp[i];
+        const currentLesson: Lesson = {
+          className: lesson.kl[0].longname,
+          startTime: lesson.startTime,
+          endTime: lesson.endTime,
+          room: lesson.ro[0].longname,
+          roomShort: lesson.ro[0].name,
+          teacher: lesson.te[0].longname,
+          teacherShort: lesson.te[0].name,
+          orignalTeacher: lesson.te[0].orgname,
+          subject: lesson.su[0].longname,
+          subjectShort: lesson.su[0].name,
+        };
+        data.lessons.push(currentLesson);
+      }
     }
   } catch (error) {
     console.error(`[ERROR] While trying to get timetable: \n${error}`);
-    return null;
   }
   await untisInstance.logout();
   return data;
@@ -54,7 +70,7 @@ export const getTimetableForToday = async (): Promise<TimetableData | null> => {
 
 export const getTimeTableForDate = async (
   date: Date,
-): Promise<TimetableData | null> => {
+): Promise<TimetableData> => {
   const userData = getUserData();
 
   const untisInstance = new WebUntis(
@@ -70,25 +86,34 @@ export const getTimeTableForDate = async (
     console.error(`[ERROR] While trying to log in: \n${error}`);
   }
 
-  let data: TimetableData | null = null;
+  let data: TimetableData = { lessons: [] };
 
   try {
     const temp = await untisInstance.getOwnTimetableFor(date);
 
-    // No lessons today
     if (temp.length == 0) {
       console.log("No lessons for that day");
-      await untisInstance.logout();
     } else {
-      console.log(temp);
-      console.log("kl data", temp[0].kl);
-      console.log("te data", temp[0].te);
-      console.log("su data", temp[0].su);
-      console.log("ro data", temp[0].ro);
+      temp.sort((a, b) => a.startTime - b.startTime);
+      for (let i = 0; i < temp.length; i++) {
+        const lesson = temp[i];
+        const currentLesson: Lesson = {
+          className: lesson.kl[0].longname,
+          startTime: lesson.startTime,
+          endTime: lesson.endTime,
+          room: lesson.ro[0].longname,
+          roomShort: lesson.ro[0].name,
+          teacher: lesson.te[0].longname,
+          teacherShort: lesson.te[0].name,
+          orignalTeacher: lesson.te[0].orgname,
+          subject: lesson.su[0].longname,
+          subjectShort: lesson.su[0].name,
+        };
+        data.lessons.push(currentLesson);
+      }
     }
   } catch (error) {
     console.error(`[ERROR] While trying to get timetable: \n${error}`);
-    return null;
   }
   await untisInstance.logout();
   return data;
