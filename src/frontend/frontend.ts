@@ -1,37 +1,56 @@
-export function userInterface() {
-  console.log(`╔══════════════════════════════════╗
-║                                  ║ 
-║Lesson 1: Math                    ║ 
-║ - from: 08:05                    ║
-║ - until: 08:50                   ║
-║ - teacher: dre                   ║
-║ - room: F007                     ║
-║ - info: Extra lesson             ║
-║Lesson 2: Math                    ║ 
-║ - from: 08:50                    ║
-║ - until: 09:35                   ║
-║ - teacher: dre                   ║
-║ - room: B009                     ║
-║Lesson 3-4: Englisch              ║
-║ - 09:55                          ║
-║ - 11:25                          ║
-║ - teacher: sue                   ║
-║ - room: B009                     ║
-║Lesson 5: Deutsch                 ║
-║ - from: 11:45                    ║
-║ - until: 12:30                   ║
-║ - teacher: (rad)frh              ║
-║ - room: (B009)F111               ║
-║ - info: Machen Sie das Blatt zur ║
-║         Raum- und Zeitgestaltung ║
-║         fertig.                  ║
-║Lesson 6: (Deutsch) Physik        ║
-║ - from: 12:30                    ║
-║ - until: 13:15                   ║
-║ - teacher: (rad) res             ║
-║ - room: (B009)F111               ║
-║ - info: Extra lesson             ║
-║Lesson 7: Physik (CANCELED)       ║
-║                                  ║ 
-╚══════════════════════════════════╝`)
+import { Lesson } from "webuntis"
+import { TimetableData } from "../api/lesson/getTimetable"
+
+enum boxCharTypes {
+  Vertical = 0,
+  Horizontal,
+  Upperleft,
+  Upperright,
+  Lowerleft,
+  Lowerright,
+}
+const type = boxCharTypes
+
+const boxChars = ["║", "═", "╔", "╗", "╚", "╝"]
+
+function createAsciiBox(lessons: string[]): string {
+  const maxLineLength = Math.max(...lessons.map((line) => line.length))
+  const boxWidth = maxLineLength + 2
+
+  const topBorder = `${boxChars[type.Upperleft]}${boxChars[
+    type.Horizontal
+  ].repeat(boxWidth)}${boxChars[type.Upperright]}`
+
+  const bottom = `${boxChars[type.Lowerleft]}${boxChars[type.Horizontal].repeat(
+    boxWidth
+  )}${boxChars[type.Lowerright]}`
+
+  const lessonLines = lessons.map((line) => {
+    const padding = " ".repeat(boxWidth - line.length)
+    return `${boxChars[type.Vertical]}${line}${padding}${
+      boxChars[type.Vertical]
+    }`
+  })
+
+  return [topBorder, ...lessonLines, bottom].join("\n")
+}
+
+export function userInterface(data: TimetableData) {
+  var lessonText: string[]
+
+  lessonText = [""]
+  for (var i = 0; i < data.lessons.length; i++) {
+    if ((i = 0)) lessonText = [`Lesson ${i + 1}: ${data.lessons[i].subject}`]
+    lessonText.push(` - from: ${data.lessons[i].startTime}`)
+    lessonText.push(` - until: ${data.lessons[i].endTime}`)
+    if (data.lessons[i].orignalTeacher != undefined) {
+      lessonText.push(
+        ` - teacher: (${data.lessons[i].orignalTeacher}) ${data.lessons[i].teacher}`
+      )
+    } else {
+      lessonText.push(` - teacher: ${data.lessons[i].teacher}`)
+    }
+  }
+
+  console.log(createAsciiBox(lessonText))
 }

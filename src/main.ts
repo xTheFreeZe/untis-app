@@ -1,20 +1,18 @@
-import { configDotenv } from "dotenv";
-configDotenv();
+import { configDotenv } from "dotenv"
+configDotenv()
 
 import {
   getTimetableForToday,
   getTimeTableForDate,
-} from "./api/lesson/getTimetable";
+} from "./api/lesson/getTimetable"
+import { userInterface } from "./frontend/frontend"
 
 const main = async () => {
-  const dayplustwo = new Date();
-  dayplustwo.setDate(dayplustwo.getDate() + 2);
+  const dayplustwo = new Date()
+  dayplustwo.setDate(dayplustwo.getDate() + 2)
+  const data = await getTimeTableForDate(dayplustwo)
 
-  const data = await getTimeTableForDate(dayplustwo);
-  console.log(data.lessons);
+  userInterface(data)
+}
 
-  const dataToday = await getTimetableForToday();
-  console.log(dataToday.lessons);
-};
-
-main();
+main()
