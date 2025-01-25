@@ -5,6 +5,7 @@ import {
   getTimetableForToday,
   getTimeTableForDate,
 } from "./api/lesson/getTimetable";
+import { userInterface } from "./frontend/frontend";
 
 const main = async () => {
   const data = await getTimetableForToday();
@@ -18,3 +19,4 @@ const main = async () => {
 };
 
 main();
+userInterface();
