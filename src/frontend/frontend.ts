@@ -38,8 +38,6 @@ function createAsciiBox(lessons: string[]): string {
 export function userInterface(data: TimetableData) {
   var lessonText: string[];
 
-  console.log("Yo");
-
   lessonText = [""];
   for (let i = 0; i < data.lessons.length; i++) {
     if (i == 0) {

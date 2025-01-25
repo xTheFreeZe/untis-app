@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/main.js",
-    "run": "tsc -p tsconfig.json && node dist/main.js"
+    "run": "tsc -p tsconfig.json && node dist/main.js",
+    "test": "tsc -p tsconfig.json && node dist/test/testUntis.js"
   },
   "repository": {
     "type": "git",
