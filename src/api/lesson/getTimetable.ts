@@ -3,8 +3,8 @@ import { getUserData } from "../../util/getUserData.js";
 
 interface Lesson {
   className: string;
-  startTime: number;
-  endTime: number;
+  startTime: string;
+  endTime: string;
   room: string;
   roomShort: string;
   teacher: string;
@@ -46,11 +46,17 @@ export const getTimeTableForDate = async (
     } else {
       temp.sort((a, b) => a.startTime - b.startTime);
       for (let i = 0; i < temp.length; i++) {
+        // This regex inserts a ":" after the first two digits - for time formatting since the API returns time as 1234
+        let insertRegex = /(\d{2})/;
+        if (temp[i].startTime.toString().length === 3) {
+          // In case the time is only 3 digits long, insert a ":" after the first digit
+          insertRegex = /(\d{1})/;
+        }
         const lesson = temp[i];
         const currentLesson: Lesson = {
           className: lesson.kl[0].longname,
-          startTime: lesson.startTime,
-          endTime: lesson.endTime,
+          startTime: lesson.startTime.toString().replace(insertRegex, "$1:"),
+          endTime: lesson.endTime.toString().replace(insertRegex, "$1:"),
           room: lesson.ro[0].longname,
           roomShort: lesson.ro[0].name,
           teacher: lesson.te[0].longname,

@@ -1,30 +1,11 @@
-import { WebUntisElementType, WebUntis } from "webuntis";
-import { configDotenv } from "dotenv";
-configDotenv();
-
-import { getUserData } from "../util/getUserData";
-
 const testFunction = async () => {
-  const data = getUserData();
+  const input = 1234;
 
-  const untisInstance = new WebUntis(
-    data.SCHOOL,
-    data.NAME,
-    data.PASSWORD,
-    data.SERVER,
-  );
+  // INsert a : after the first two digits
+  const insertRegex = /(\d{2})/;
+  const result = input.toString().replace(insertRegex, "$1:");
 
-  await untisInstance.login();
-
-  const timetable = await untisInstance.getTimetableFor(
-    new Date(),
-    0,
-    WebUntisElementType.SUBJECT,
-  );
-
-  console.log(timetable);
-
-  await untisInstance.logout();
+  console.log(result);
 };
 
 testFunction();
