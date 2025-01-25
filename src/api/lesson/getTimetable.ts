@@ -1,5 +1,5 @@
 import { WebUntis } from "webuntis";
-import { getUserData } from "../../util/getUserData";
+import { getUserData } from "../../util/getUserData.js";
 
 interface Lesson {
   className: string;

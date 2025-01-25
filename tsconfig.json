@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
+    "target": "ESNext",
     "outDir": "./dist",
     "allowJs": true, // allows import js files
     "strict": true,
@@ -11,7 +10,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true, // allows import json files
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "module": "ESNext" // Ensures ESM support
   },
   "include": ["./src/**/*"],
   "exclude": ["node_modules"]

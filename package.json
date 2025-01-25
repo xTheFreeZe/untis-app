@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "untis-app",
   "version": "1.0.0",
   "description": "Terminal based app to interact with the untis webapp",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/xTheFreeZe/untis-app#readme",
   "dependencies": {
+    "boxen": "^8.0.1",
     "dotenv": "^16.4.7",
     "webuntis": "^2.2.1"
   },
