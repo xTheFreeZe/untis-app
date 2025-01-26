@@ -22,6 +22,7 @@
   "homepage": "https://github.com/xTheFreeZe/untis-app#readme",
   "dependencies": {
     "boxen": "^8.0.1",
+    "chalk": "^5.4.1",
     "dotenv": "^16.4.7",
     "webuntis": "^2.2.1"
   },

@@ -1,11 +1,9 @@
+import chalk from "chalk";
+
 const testFunction = async () => {
-  const input = 1234;
+  const text = chalk.blue("Hello World");
 
-  // INsert a : after the first two digits
-  const insertRegex = /(\d{2})/;
-  const result = input.toString().replace(insertRegex, "$1:");
-
-  console.log(result);
+  console.log(text);
 };
 
 testFunction();
